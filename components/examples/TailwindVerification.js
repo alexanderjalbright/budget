@@ -1,6 +1,6 @@
 export default function TailwindVerification() {
     return (
-        <div className="p-4 border-dotted border-4 border-light-blue-500 w-1/4">
+        <div className="p-4 border-dotted border-4 border-light-blue-500 max-w-md">
             <h2>TailwindCSS Verification</h2>
             <div className="mt-4 p-4 rounded bg-blue-300 text-center">
                 <p className="text-blue-600">
