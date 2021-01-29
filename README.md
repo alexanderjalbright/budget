@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Requirements
+-   >= Node.js 12.13.0
+
 ## Setup Development Project
 
 cd to director to place project folder
