@@ -7,7 +7,7 @@ export default function Creators({ names }) {
         return array;
     }
 
-    const nameList = shuffleArray(names)?.map((name, index) => (
+    const nameList = shuffleArray([...names])?.map((name, index) => (
         <li key={index}>{name}</li>
     ));
 
