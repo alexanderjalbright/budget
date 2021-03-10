@@ -3,6 +3,7 @@ import {
     PlaygroundDisplay,
     SignIn,
     Profile,
+    NavBar
 } from 'components/examples';
 import Link from 'next/link';
 
@@ -19,6 +20,7 @@ export default function Home({ names }) {
                     Go to ServerSide Protected Page
                 </a>
             </Link>
+            <NavBar />
         </div>
     );
 }
