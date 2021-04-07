@@ -4,9 +4,13 @@ import {
     SignIn,
     Profile,
 } from 'components/examples';
+import Numpad from 'components/numpad/Numpad';
 import Link from 'next/link';
+import {useState} from 'react'
 
 export default function Home({ names }) {
+    const [amount, setAmount] = useState();
+
     return (
         <div>
             <h1>Home</h1>
@@ -19,6 +23,8 @@ export default function Home({ names }) {
                     Go to ServerSide Protected Page
                 </a>
             </Link>
+            <div>{amount}</div>
+            <Numpad setValue={setAmount} />
         </div>
     );
 }
