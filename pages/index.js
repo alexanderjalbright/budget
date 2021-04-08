@@ -3,8 +3,8 @@ import {
     PlaygroundDisplay,
     SignIn,
     Profile,
-    NavBar
 } from 'components/examples';
+import NavBar from 'components/navbar/NavBar';
 import Link from 'next/link';
 
 export default function Home({ names }) {

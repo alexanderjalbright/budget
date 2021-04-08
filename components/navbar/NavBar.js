@@ -1,6 +1,8 @@
+import styles from './NavBar.module.css';
+
 export default function NavBar() {
     return (
-        <nav>
+        <nav className={styles.navbar}>
             <a href="#">
                 <svg
                     class="h-8 w-8 text-white"
