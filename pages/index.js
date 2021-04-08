@@ -4,6 +4,7 @@ import {
     SignIn,
     Profile,
 } from 'components/examples';
+import NavBar from 'components/navbar/NavBar';
 import Link from 'next/link';
 
 export default function Home({ names }) {
@@ -19,6 +20,7 @@ export default function Home({ names }) {
                     Go to ServerSide Protected Page
                 </a>
             </Link>
+            <NavBar />
         </div>
     );
 }
