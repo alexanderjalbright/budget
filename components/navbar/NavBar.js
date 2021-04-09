@@ -3,18 +3,18 @@ import GraphIcon from './GraphIcon';
 import HistoryIcon from './HistoryIcon';
 import styles from './NavBar.module.css';
 
-export default function NavBar() {
+export default function NavBar({ setView }) {
     return (
         <nav className={styles.navbar}>
-            <a href="#">
+            <button onClick={() => setView('graph')}>
                 <GraphIcon />
-            </a>
-            <a href="#">
+            </button>
+            <button onClick={() => setView('home')}>
                 <AddIcon />
-            </a>
-            <a href="#">
+            </button>
+            <button onClick={() => setView('history')}>
                 <HistoryIcon />
-            </a>
+            </button>
         </nav>
     );
 }

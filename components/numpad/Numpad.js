@@ -5,8 +5,7 @@ const numpadReducer = (state, action) => {
     if (['delete', 'backspace'].includes(action.toLowerCase()))
         return (Math.floor(state * 10) / 100).toFixed(2);
 
-    if (state > 1_000_000_000)
-        return state;
+    if (state > 1_000_000_000) return state;
 
     if (['decimal', '.'].includes(action.toLowerCase()))
         return state.toString().includes('.00')
@@ -24,20 +23,15 @@ const useVirtualNumpad = (setValue, defaultValue = 0) => {
         numpadReducer,
         defaultValue.toFixed(2)
     );
+
     const onKeyDownRef = useRef();
 
-    useEffect(() => {
-        onKeyDownRef.current = window.document.onkeydown;
-    }, []);
+    useEffect(() => (onKeyDownRef.current = window.document.onkeydown), []);
+
+    useEffect(() => setValue(value), [value]);
 
     useEffect(() => {
-        setValue(value); 
-    }, [value])
-
-    useEffect(() => {
-        window.document.onkeydown = (e) => {
-            dispatch(e.key);
-        };
+        window.document.onkeydown = (e) => dispatch(e.key);
         return () => (window.document.onkeydown = onKeyDownRef.current);
     }, [dispatch]);
 
@@ -47,19 +41,15 @@ const useVirtualNumpad = (setValue, defaultValue = 0) => {
         accum[name] = {
             name,
             onClick: (e) => dispatch(e.target.name),
-            role: 'button',
-            class: 'p-2 m-2 text-center',
         };
 
         return accum;
     }, {});
 
-    return {
-        buttonProps,
-    };
+    return buttonProps;
 };
-const Numpad = ({setValue}) => {
-    const { buttonProps } = useVirtualNumpad(setValue);
+const Numpad = ({ setValue }) => {
+    const buttonProps = useVirtualNumpad(setValue);
 
     return (
         <div>
@@ -89,17 +79,5 @@ const Numpad = ({setValue}) => {
         </div>
     );
 };
-
-// function Numpad() {
-//     const [isKeypadVisible, setIsKeypadVisible] = useState();
-//     return (
-//         <div >
-//             {isKeypadVisible && <KeyPad />}
-//             <button onClick={() => setIsKeypadVisible(!isKeypadVisible)}>
-//                 {isKeypadVisible ? 'Hide' : 'Show'}
-//             </button>
-//         </div>
-//     );
-// }
 
 export default Numpad;
