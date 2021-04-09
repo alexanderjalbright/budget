@@ -5,6 +5,7 @@ import {
     Profile,
 } from 'components/examples';
 import Numpad from 'components/numpad/Numpad';
+import NavBar from 'components/navbar/NavBar';
 import Link from 'next/link';
 import {useState} from 'react'
 
@@ -25,6 +26,7 @@ export default function Home({ names }) {
             </Link>
             <div>{amount}</div>
             <Numpad setValue={setAmount} />
+            <NavBar />
         </div>
     );
 }
