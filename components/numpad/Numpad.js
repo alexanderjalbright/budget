@@ -54,7 +54,7 @@ const Numpad = ({ setValue }) => {
     return (
         <div>
             <div>
-                <div>
+                <div class="mr-auto">
                     <Button {...buttonProps[7]}>7</Button>
                     <Button {...buttonProps[8]}>8</Button>
                     <Button {...buttonProps[9]}>9</Button>

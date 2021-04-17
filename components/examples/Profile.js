@@ -11,14 +11,12 @@ export default function Profile() {
 
     return (
         <>
-            <div>Name: {session.user.name}</div>
-            <div>Email: {session.user.email}</div>
-            <div>
-                <img
-                    className="rounded-full w-24 h-24"
-                    src={session.user.image}
-                />
-            </div>
+            <div>{session.user.name}</div>
+            {/* <div>{session.user.email}</div> */}
+            <img
+                className="rounded-full self-center h-3/4"
+                src={session.user.image}
+            />
         </>
     );
 }
