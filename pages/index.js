@@ -3,10 +3,11 @@ import { getSession } from 'next-auth/client';
 
 export default function Login({ names }) {
     return (
-        <div>
-            <h1>Log in</h1>
-            <SignIn />
+        <div className="py-5 px-5 h-screen flex flex-col justify-around items-center text-center ">
+            <h1 className="mb-3">Budget</h1>
+            <h2 className="mb-3">Sign in</h2>
             <Profile />
+            <SignIn />
             <PlaygroundDisplay {...{ names }} />
         </div>
     );

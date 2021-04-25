@@ -52,25 +52,24 @@ const Numpad = ({ setValue }) => {
     const buttonProps = useVirtualNumpad(setValue);
 
     return (
-        <div>
-            <div>
-                <div class="mr-auto">
+        <div className="px-2 h-full flex justify-center">
+            <div className="max-w-xs  flex-grow flex flex-col justify-between">
+                <div className="flex justify-between">
                     <Button {...buttonProps[7]}>7</Button>
                     <Button {...buttonProps[8]}>8</Button>
                     <Button {...buttonProps[9]}>9</Button>
                 </div>
-
-                <div>
+                <div className="flex justify-between">
                     <Button {...buttonProps[4]}>4</Button>
                     <Button {...buttonProps[5]}>5</Button>
                     <Button {...buttonProps[6]}>6</Button>
                 </div>
-                <div>
+                <div className="flex justify-between">
                     <Button {...buttonProps[1]}>1</Button>
                     <Button {...buttonProps[2]}>2</Button>
                     <Button {...buttonProps[3]}>3</Button>
                 </div>
-                <div>
+                <div className="flex justify-between">
                     <Button {...buttonProps['decimal']}>.</Button>
                     <Button {...buttonProps[0]}>0</Button>
                     <Button {...buttonProps['delete']}>{'<'}</Button>

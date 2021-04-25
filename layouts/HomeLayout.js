@@ -1,38 +1,24 @@
 import NavBar from 'components/navbar/NavBar';
-import { Profile } from 'components/examples';
-import { signOut } from 'next-auth/client';
 import { useSession } from 'next-auth/client';
-import styles from './HomeLayout.module.css';
+import ProfileMenu from 'components/profileMenu/ProfileMenu';
+import FullPageLoader from 'components/loading/FullPageLoader';
 
 export default function HomeLayout({ children, setView }) {
     const [session, loading] = useSession();
 
-    if (loading) return null;
+    if (loading) return <FullPageLoader />;
 
     if (!loading && !session) {
-        return <p>You are not logged in</p>;
+        return <div>You are not logged in.</div>;
     }
-
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="px-2 flex h-12 items-center justify-between">
-                <h1>Home</h1>
-                <div className="flex-grow"></div>
-                {/* <div>{session.user.name}</div> */}
-                <div className="h-full py-2">
-                    <button
-                        className="h-full mx-1 bg-blue-700 text-white border border-blue-700 font-bold py-0 px-6 rounded-lg"
-                        onClick={signOut}
-                    >
-                        Sign out
-                    </button>
-                </div>
-                <img
-                    className="rounded-full self-center h-3/4 pl-2"
-                    src={session.user.image}
-                />
+            <div className="px-2 pb-2 flex h-12 items-center justify-between">
+                <h1 className="w-25 pr-2">Home</h1>
+                <div className="flex-grow text-center">Budget</div>
+                <ProfileMenu />
             </div>
-            <div className="flex-grow px-2">{children}</div>
+            <div className="flex-grow px-2 flex flex-col">{children}</div>
             <NavBar setView={setView} />
         </div>
     );
