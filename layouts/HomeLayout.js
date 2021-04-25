@@ -6,7 +6,8 @@ import FullPageLoader from 'components/loading/FullPageLoader';
 export default function HomeLayout({ children, setView }) {
     const [session, loading] = useSession();
 
-    if (loading) return <FullPageLoader />;
+    // if (loading)
+    return <FullPageLoader message="Checking profile..." />;
 
     if (!loading && !session) {
         return <div>You are not logged in.</div>;
