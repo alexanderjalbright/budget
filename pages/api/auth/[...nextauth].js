@@ -15,5 +15,18 @@ export default async (req, res) => {
         jwt: {
             secret: process.env.JWT_SECRET,
         },
+        callbacks: {
+            signin: async (user, account, profile) => {
+                const isAllowedToSignIn = true;
+                if (isAllowedToSignIn) {
+                    return '/home';
+                } else {
+                    // Return false to display a default error message
+                    return '/';
+                    // Or you can return a URL to redirect to:
+                    // return '/unauthorized'
+                }
+            },
+        },
     });
 };
