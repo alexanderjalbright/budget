@@ -5,6 +5,7 @@ import {
     Profile,
 } from 'components/examples';
 import { Submit } from 'components';
+import NavBar from 'components/navbar/NavBar';
 import Link from 'next/link';
 
 // This is what shows up on the page
@@ -22,6 +23,7 @@ export default function Home({ names }) {
                 </a>
             </Link>
             <Submit data={{ gas: 20 }} />
+            <NavBar />
         </div>
     );
 }
