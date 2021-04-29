@@ -21,7 +21,7 @@ export default function Home({ names }) {
                     Go to ServerSide Protected Page
                 </a>
             </Link>
-            <Submit data={'peepeepoopoo'} />
+            <Submit data={{ gas: 20 }} />
         </div>
     );
 }

@@ -1,7 +1,8 @@
 export default (req, res) => {
-    res.statusCode = 200;
-    let body = req.body;
     if (req.method === 'POST') {
-        res.json({ apiReturn: `Posted ${body} successfully` });
+        console.log;
+        let body = req.body;
+        res.statusCode = 200;
+        return res;
     }
 };

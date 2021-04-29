@@ -8,7 +8,7 @@ export default function Submit({ data }) {
             method: 'POST',
             body: JSON.stringify({
                 title: 'title',
-                body: { data: data },
+                body: data,
             }),
         });
         const json = await res.json();
@@ -16,7 +16,6 @@ export default function Submit({ data }) {
             setResponseSubmitError(null);
         }
         setResponseSubmit(json);
-        console.log('seeing if state set - ', responseSubmit);
     }
 
     return (
