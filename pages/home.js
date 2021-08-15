@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { getSession } from 'next-auth/client';
 import HomeLayout from 'layouts/HomeLayout';
 import { HomeView, GraphView, HistoryView } from 'components/homeViews';
+// import Adapters from 'next-auth/adapters';
 
 export default function Home() {
     const [view, setView] = useState('home');
+
+    // console.log('Adapters', Adapters);
 
     return (
         <div>

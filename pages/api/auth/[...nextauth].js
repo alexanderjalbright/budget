@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth';
+import Adapters from 'next-auth/adapters';
 import Providers from 'next-auth/providers';
+import Models from '../../../models';
 
 export default async (req, res) => {
     await NextAuth(req, res, {
@@ -32,5 +34,8 @@ export default async (req, res) => {
                 }
             },
         },
+        adapter: Adapters.TypeORM.Adapter(process.env.MONGODB_URI, {
+            models: Models,
+        }),
     });
 };

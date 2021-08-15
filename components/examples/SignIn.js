@@ -15,9 +15,11 @@ export default function SignIn() {
         return (
             <div>
                 {providers.map((provider) => (
-                    <div className="pb-3">
+                    <div
+                        key={`sign-in-provider-${provider.id}`}
+                        className="pb-3"
+                    >
                         <button
-                            key={`sign-in-provider-${provider.id}`}
                             className="bg-blue-700 text-white border border-blue-700 font-bold py-2 px-6 rounded-lg"
                             onClick={() => signIn(provider.id)}
                         >
