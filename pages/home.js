@@ -7,8 +7,6 @@ import { HomeView, GraphView, HistoryView } from 'components/homeViews';
 export default function Home() {
     const [view, setView] = useState('home');
 
-    // console.log('Adapters', Adapters);
-
     return (
         <div>
             <HomeLayout setView={setView}>
