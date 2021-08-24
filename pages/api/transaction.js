@@ -1,4 +1,8 @@
+import Transaction from 'models/Transaction';
 import { useSession, getSession } from 'next-auth/client';
+import dbConnect from 'utils/dbConnect';
+
+dbConnect();
 
 export default async (req, res) => {
     try {
@@ -23,4 +27,9 @@ const addSpending = (id, amount, category) => {
     console.log('id', id);
     console.log('amount', amount);
     console.log('category', category);
+    Transaction.create({
+        userId: id,
+        amount: Math.floor(amount * 100),
+        category,
+    });
 };
