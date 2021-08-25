@@ -1,35 +1,60 @@
 import Transaction from 'models/Transaction';
-import { useSession, getSession } from 'next-auth/client';
+import { getSession } from 'next-auth/client';
 import dbConnect from 'utils/dbConnect';
 
 dbConnect();
 
 export default async (req, res) => {
-    try {
-        if (req.method === 'POST') {
-            const { id } = await getSession({ req });
-            const { amount, category } = JSON.parse(req.body);
-            addSpending(id, amount, category);
-        }
+    switch (req.method.toUpperCase()) {
+        case 'POST':
+            try {
+                const { id } = await getSession({ req });
+                const { amount, category, date } = JSON.parse(req.body);
 
-        res.statusCode = 200;
-        res.json({ isSuccess: true });
-        res.end();
-    } catch (error) {
-        res.statusCode = 500;
-        console.log('error', error);
-        res.json({ isSuccess: false, error: error });
+                Transaction.create(
+                    {
+                        userId: id,
+                        amount,
+                        category,
+                        date,
+                    },
+                    (err, value) => {
+                        if (err) throw err;
+                        else
+                            res.status(200).send({
+                                isSuccess: true,
+                                result: value,
+                            });
+                    }
+                );
+            } catch (error) {
+                console.log('transactions_POST_error', error);
+                res.status(500).send({
+                    isSuccess: false,
+                    error: 'Error saving transaction',
+                });
+            }
+            return;
+        case 'GET':
+            try {
+                const { userId } = req.query;
+
+                const transactions = await Transaction.find({
+                    userId,
+                });
+                return res
+                    .status(200)
+                    .send({ transactions: transactions || [] });
+            } catch (error) {
+                console.log('transactions_GET_error', error);
+                res.status(500).send({
+                    isSuccess: false,
+                    error: 'Error retrieving transactions',
+                });
+            }
+            return;
+        default:
+            res.status(400).send({ isSuccess: false, error: 'Missing method' });
+            return;
     }
-};
-
-const addSpending = (id, amount, category) => {
-    //TODO: Database stuff!
-    console.log('id', id);
-    console.log('amount', amount);
-    console.log('category', category);
-    Transaction.create({
-        userId: id,
-        amount: Math.floor(amount * 100),
-        category,
-    });
 };

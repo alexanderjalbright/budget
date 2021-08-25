@@ -5,13 +5,16 @@ const connection = {};
 async function dbConnect() {
     if (connection.isConnected) return;
 
-    const db = await mongoose.connect(process.env.MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+    const db = await mongoose.connect(
+        process.env.MONGODB_URI,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+        (error) => console.log('Mongoose Connection Error', error)
+    );
 
     connection.isConnected = db.connections[0].readyState;
-    console.log('isConnected', connection.isConnected);
 }
 
 export default dbConnect;

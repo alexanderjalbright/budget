@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Numpad from 'components/numpad/Numpad';
+import useNumpad from 'components/numpad/Numpad';
 
 const CATEGORIES = [
     'Alcohol',
@@ -11,15 +11,23 @@ const CATEGORIES = [
     'Special',
 ];
 
-export default function HomeView() {
-    const [amount, setAmount] = useState();
+export default function HomeView({ setCurrentTransactions }) {
     const [category, setCategory] = useState('Food');
     const [isSuccessful, setIsSuccessful] = useState(true);
 
+    const Numpad = useNumpad();
+
     const submitHandler = async () => {
+        const body = JSON.stringify({
+            amount: Numpad.amount,
+            category,
+            date: new Date(),
+        });
+        Numpad.reset();
+
         const res = await fetch(`/api/transaction`, {
             method: 'POST',
-            body: JSON.stringify({ amount, category }), // body data type must match "Content-Type" header
+            body,
         });
 
         setIsSuccessful(res.ok);
@@ -34,8 +42,10 @@ export default function HomeView() {
             return;
         }
 
-        console.log('result', result);
+        setCurrentTransactions((old) => [...old, result.result]);
     };
+
+    const disabled = Numpad.amount === '0.00' || !category;
 
     return (
         <div className="flex-grow flex flex-col items-stretch">
@@ -63,14 +73,18 @@ export default function HomeView() {
                 </div>
             </form>
             <div className="max-w-xs mx-auto w-full flex-grow pb-2 flex flex-col justify-around items-end ">
-                <span className="mr-9">{amount}</span>
+                <span className="mr-9">{Numpad.amount}</span>
             </div>
-            <Numpad setValue={setAmount} />
+            {Numpad.element}
             <div className="flex justify-center py-2">
                 <button
-                    className="bg-blue-600 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
+                    className={`bg-blue-500 text-white font-bold py-2 px-4 rounded ${
+                        disabled
+                            ? 'opacity-50 cursor-not-allowed'
+                            : 'hover:bg-blue-700'
+                    }`}
                     onClick={submitHandler}
-                    disabled={amount <= 0 || !category}
+                    disabled={disabled}
                 >
                     Submit
                 </button>
