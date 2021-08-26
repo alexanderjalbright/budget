@@ -1,7 +1,8 @@
 import { useEffect, useReducer, useRef } from 'react';
-import Button from './Button';
+import Button from '../components/numpad/Button';
 
 const numpadReducer = (state, action) => {
+    if (action === 'reset') return (0).toFixed(2);
     if (['delete', 'backspace'].includes(action.toLowerCase()))
         return (Math.floor(state * 10) / 100).toFixed(2);
 
@@ -18,8 +19,8 @@ const numpadReducer = (state, action) => {
     return state;
 };
 
-const useVirtualNumpad = (setValue, defaultValue = 0) => {
-    const [value, dispatch] = useReducer(
+const useNumpad = (defaultValue = 0.0) => {
+    const [amount, dispatch] = useReducer(
         numpadReducer,
         defaultValue.toFixed(2)
     );
@@ -27,8 +28,6 @@ const useVirtualNumpad = (setValue, defaultValue = 0) => {
     const onKeyDownRef = useRef();
 
     useEffect(() => (onKeyDownRef.current = window.document.onkeydown), []);
-
-    useEffect(() => setValue(value), [value]);
 
     useEffect(() => {
         window.document.onkeydown = (e) => dispatch(e.key);
@@ -46,12 +45,9 @@ const useVirtualNumpad = (setValue, defaultValue = 0) => {
         return accum;
     }, {});
 
-    return buttonProps;
-};
-const Numpad = ({ setValue }) => {
-    const buttonProps = useVirtualNumpad(setValue);
+    const reset = () => dispatch('reset');
 
-    return (
+    const element = (
         <div className="px-2 h-full flex justify-center">
             <div className="max-w-xs  flex-grow flex flex-col justify-between">
                 <div className="flex justify-between">
@@ -77,6 +73,8 @@ const Numpad = ({ setValue }) => {
             </div>
         </div>
     );
+
+    return { reset, element, amount };
 };
 
-export default Numpad;
+export default useNumpad;
