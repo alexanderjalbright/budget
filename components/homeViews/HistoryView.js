@@ -2,7 +2,7 @@ const displayDate = (date) => new Date(date).toLocaleDateString();
 
 const displayAmount = (amount) => '$' + (amount / 100).toFixed(2);
 
-export default function HistoryView({ currentTransactions }) {
+export default function HistoryView({ transactions }) {
     return (
         <div>
             <table className="table-auto">
@@ -14,7 +14,7 @@ export default function HistoryView({ currentTransactions }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentTransactions.map((tran) => (
+                    {transactions.value.map((tran) => (
                         <tr key={tran._id}>
                             <td className="px-4">{tran.category}</td>
                             <td className="px-4 text-right">

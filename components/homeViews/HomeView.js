@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useNumpad from 'components/numpad/Numpad';
+import useNumpad from 'hooks/useNumpad';
 
 const CATEGORIES = [
     'Alcohol',
@@ -11,41 +11,19 @@ const CATEGORIES = [
     'Special',
 ];
 
-export default function HomeView({ setCurrentTransactions }) {
+export default function HomeView({ transactions }) {
     const [category, setCategory] = useState('Food');
-    const [isSuccessful, setIsSuccessful] = useState(true);
 
-    const Numpad = useNumpad();
+    const numpad = useNumpad();
 
     const submitHandler = async () => {
-        const body = JSON.stringify({
-            amount: Numpad.amount,
-            category,
-            date: new Date(),
-        });
-        Numpad.reset();
-
-        const res = await fetch(`/api/transaction`, {
-            method: 'POST',
-            body,
-        });
-
-        setIsSuccessful(res.ok);
-
-        const result = await res.json();
-
-        if (!res.ok) {
-            if (process.env.NODE_ENV === 'development') {
-                console.log('status', res.status);
-                console.log('error', result.error);
-            }
-            return;
-        }
-
-        setCurrentTransactions((old) => [...old, result.result]);
+        const amount = numpad.amount;
+        numpad.reset();
+        transactions.add({ amount, category });
     };
 
-    const disabled = Numpad.amount === '0.00' || !category;
+    const disabled =
+        transactions.inProgress || numpad.amount === '0.00' || !category;
 
     return (
         <div className="flex-grow flex flex-col items-stretch">
@@ -73,9 +51,9 @@ export default function HomeView({ setCurrentTransactions }) {
                 </div>
             </form>
             <div className="max-w-xs mx-auto w-full flex-grow pb-2 flex flex-col justify-around items-end ">
-                <span className="mr-9">{Numpad.amount}</span>
+                <span className="mr-9">{numpad.amount}</span>
             </div>
-            {Numpad.element}
+            {numpad.element}
             <div className="flex justify-center py-2">
                 <button
                     className={`bg-blue-500 text-white font-bold py-2 px-4 rounded ${

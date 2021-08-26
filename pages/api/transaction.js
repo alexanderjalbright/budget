@@ -6,6 +6,24 @@ dbConnect();
 
 export default async (req, res) => {
     switch (req.method.toUpperCase()) {
+        case 'GET':
+            try {
+                const { userId } = req.query;
+
+                const transactions = await Transaction.find({
+                    userId,
+                });
+                return res
+                    .status(200)
+                    .send({ transactions: transactions || [] });
+            } catch (error) {
+                console.log('transactions_GET_error', error);
+                res.status(500).send({
+                    isSuccess: false,
+                    error: 'Error retrieving transactions',
+                });
+            }
+            return;
         case 'POST':
             try {
                 const { id } = await getSession({ req });
@@ -32,24 +50,6 @@ export default async (req, res) => {
                 res.status(500).send({
                     isSuccess: false,
                     error: 'Error saving transaction',
-                });
-            }
-            return;
-        case 'GET':
-            try {
-                const { userId } = req.query;
-
-                const transactions = await Transaction.find({
-                    userId,
-                });
-                return res
-                    .status(200)
-                    .send({ transactions: transactions || [] });
-            } catch (error) {
-                console.log('transactions_GET_error', error);
-                res.status(500).send({
-                    isSuccess: false,
-                    error: 'Error retrieving transactions',
                 });
             }
             return;

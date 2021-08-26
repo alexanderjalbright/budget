@@ -1,29 +1,29 @@
-import { useState, useEffect } from 'react';
-import { getSession, useSession } from 'next-auth/client';
+import { useState } from 'react';
+import { getSession } from 'next-auth/client';
 import HomeLayout from 'layouts/HomeLayout';
 import { HomeView, GraphView, HistoryView } from 'components/homeViews';
+import { useTransactions, getAllTransactions } from 'hooks/useTransactions';
+import Head from 'next/head';
 
 export default function Home({ loginTransactions }) {
     const [view, setView] = useState('home');
-    const [currentTransactions, setCurrentTransactions] =
-        useState(loginTransactions);
+
+    const transactions = useTransactions({ loginTransactions });
+
+    if (transactions.error)
+        console.log('Transactions Error', transactions.error);
 
     return (
         <div>
+            <Head>
+                <title>Budget</title>
+            </Head>
             <HomeLayout setView={setView}>
                 {
                     {
-                        home: (
-                            <HomeView
-                                setCurrentTransactions={setCurrentTransactions}
-                            />
-                        ),
+                        home: <HomeView transactions={transactions} />,
                         graph: <GraphView />,
-                        history: (
-                            <HistoryView
-                                currentTransactions={currentTransactions}
-                            />
-                        ),
+                        history: <HistoryView transactions={transactions} />,
                     }[view]
                 }
             </HomeLayout>
@@ -35,18 +35,9 @@ export async function getServerSideProps(context) {
     const session = await getSession(context);
 
     if (session) {
-        const tranRes = await fetch(
-            `${process.env.HOST}/api/transaction?userId=${session.id}`,
-            {
-                method: 'GET',
-            }
-        );
-
-        if (!tranRes.ok) return { props: { transactions: [] } };
-
-        const { transactions } = await tranRes.json();
+        const res = await getAllTransactions(session.id, `${process.env.HOST}`);
         return {
-            props: { loginTransactions: transactions },
+            props: { loginTransactions: res.transactions },
         };
     }
 

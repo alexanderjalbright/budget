@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react';
-import Button from './Button';
+import Button from '../components/numpad/Button';
 
 const numpadReducer = (state, action) => {
     if (action === 'reset') return (0).toFixed(2);
