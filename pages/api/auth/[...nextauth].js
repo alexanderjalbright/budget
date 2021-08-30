@@ -35,5 +35,8 @@ export default async (req, res) => {
         adapter: Adapters.TypeORM.Adapter(process.env.MONGODB_URI, {
             models: Models,
         }),
+        pages: {
+            error: '/',
+        },
     });
 };
