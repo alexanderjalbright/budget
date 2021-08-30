@@ -1,13 +1,17 @@
 import { PlaygroundDisplay, SignIn, Profile } from 'components/examples';
+import { SignInError } from 'components/SignInError';
 import { getSession } from 'next-auth/client';
+import { useRouter } from 'next/router';
 
 export default function Login({ names }) {
+    const { error } = useRouter().query;
     return (
         <div className="py-5 px-5 h-screen flex flex-col justify-around items-center text-center ">
             <h1 className="mb-3">Budget</h1>
             <h2 className="mb-3">Sign in</h2>
             <Profile />
             <SignIn />
+            <SignInError error={error} />
             <PlaygroundDisplay {...{ names }} />
         </div>
     );

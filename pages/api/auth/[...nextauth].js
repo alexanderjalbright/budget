@@ -19,9 +19,10 @@ export default async (req, res) => {
         secret: process.env.NEXT_AUTH_SECRET,
         // debug: process.env.NODE_ENV === 'development',
         debug: false,
-        jwt: {
-            secret: process.env.JWT_SECRET,
-        },
+        // jwt: {
+        //     secret: process.env.JWT_SECRET,
+        // },
+        database: process.env.MONGODB_URI,
         callbacks: {
             signin: async (user, account, profile) => {
                 return true;
@@ -34,5 +35,8 @@ export default async (req, res) => {
         adapter: Adapters.TypeORM.Adapter(process.env.MONGODB_URI, {
             models: Models,
         }),
+        pages: {
+            error: '/',
+        },
     });
 };
