@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { signOut } from 'next-auth/client';
 import { useSession } from 'next-auth/client';
-
-const signOutHandler = (e) => {
-    e.preventDefault();
-    signOut();
-};
+import { useRouter } from 'next/router';
 
 const Dropdown = ({ children, isVisible }) => (
     <div
@@ -51,6 +47,14 @@ const ProfileMenu = () => {
 
     const toggleIsProfileMenuVisible = () => {
         setIsProfileMenuVisible((prev) => !prev);
+    };
+
+    const router = useRouter();
+
+    const signOutHandler = async (e) => {
+        e.preventDefault();
+        const data = await signOut({ redirect: false, callbackUrl: '/' });
+        router.push(data.url);
     };
 
     return (
